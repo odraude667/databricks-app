@@ -10,5 +10,8 @@ Visualizaciones recomendadas:
 4. Dona: distribución por método de pago.
 5. Tarjetas: total de viajes, ingresos y ticket promedio.
 
-Guardar aquí las exportaciones `.json`, capturas `.png` y un `.txt` con el enlace del dashboard publicado.
+Archivos incluidos:
 
+- `nyc_taxi_dashboard.lvdash.json`: definición exportable del dashboard.
+- `dashboard_nyc_taxi.png`: evidencia visual del dashboard publicado.
+- `dashboard_link.txt`: enlace al dashboard publicado.
