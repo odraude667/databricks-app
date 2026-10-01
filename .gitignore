@@ -8,3 +8,4 @@ dashboard/*.json
 dashboard/*.png
 evidencias/*.png
 certificaciones/*.png
+datasets/yellow_tripdata_2024-01.parquet
