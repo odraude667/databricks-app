@@ -23,6 +23,16 @@ jobs:
           for path in datasets dashboard reversion seguridad PrepAmb proceso certificaciones evidencias README.md; do
             test -e "$path" || { echo "Missing $path"; exit 1; }
           done
+      - name: Validate source datasets
+        shell: bash
+        run: |
+          test -s datasets/taxi_zone_lookup.csv
+          for part in datasets/yellow_tripdata_2024-01.parquet.part{01,02,03}; do
+            test -s "$part"
+          done
+          python datasets/reconstruct_parquet.py
+          test "$(head -c 4 datasets/yellow_tripdata_2024-01.parquet)" = "PAR1"
+          test "$(tail -c 4 datasets/yellow_tripdata_2024-01.parquet)" = "PAR1"
 
   deploy:
     # Production deployment is intentionally manual so validation commits do not
