@@ -31,11 +31,16 @@ jobs:
     needs: validate
     runs-on: ubuntu-latest
     environment: production
+    env:
+      DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
+      DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
+      DATABRICKS_JOB_ID: '493919681472792'
     steps:
       - uses: actions/checkout@v4
       - uses: databricks/setup-cli@main
-      - name: Import notebooks
-        env:
-          DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
-          DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
-        run: databricks workspace import-dir . /Shared/databricks-course --overwrite
+      - name: Verify Databricks authentication
+        run: databricks current-user me
+      - name: Deploy production notebooks
+        run: databricks workspace import-dir proceso /Shared/databricks-course/proceso --overwrite
+      - name: Run production pipeline and wait for completion
+        run: databricks jobs run-now "$DATABRICKS_JOB_ID" --timeout 45m
