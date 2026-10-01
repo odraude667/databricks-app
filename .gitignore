@@ -1,0 +1,10 @@
+.azure-cli/
+work/
+__pycache__/
+*.pyc
+.pytest_cache/
+.venv/
+dashboard/*.json
+dashboard/*.png
+evidencias/*.png
+certificaciones/*.png
