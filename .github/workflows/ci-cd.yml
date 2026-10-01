@@ -25,7 +25,9 @@ jobs:
           done
 
   deploy:
-    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    # Production deployment is intentionally manual so validation commits do not
+    # fail before the repository secrets have been configured.
+    if: github.ref == 'refs/heads/main' && github.event_name == 'workflow_dispatch'
     needs: validate
     runs-on: ubuntu-latest
     environment: production
@@ -37,4 +39,3 @@ jobs:
           DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
           DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
         run: databricks workspace import-dir . /Shared/databricks-course --overwrite
-
