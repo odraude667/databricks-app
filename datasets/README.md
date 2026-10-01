@@ -24,7 +24,7 @@ Gen2 durante la ejecución del pipeline.
 
 Los archivos originales se conservan sin modificación en `raw`. Las capas
 siguientes usan Delta Lake. El acceso entre Databricks y ADLS se realiza con el
-Access Connector y su Managed Identity; no se almacenan claves en el código.
+Access Connector y su Managed Identity.
 
 `reconstruct_parquet.py` concatena las partes en orden y valida la firma
 Parquet. El ETL de producción descarga la copia íntegra desde la fuente oficial
