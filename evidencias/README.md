@@ -1,15 +1,5 @@
 # Evidencias
 
-Agregar capturas PNG de:
-
-- Recursos aprovisionados en Azure.
-- Contenedores y archivos raw.
-- Ejecución exitosa del workflow de Databricks.
-- Tablas Bronze, Silver y Gold.
-- Validaciones de calidad.
-- Ejecución exitosa de GitHub Actions.
-- Dashboard final.
-
 Evidencias incorporadas:
 
 - `dashboard_final.png`: dashboard AI/BI publicado y cargado correctamente.
