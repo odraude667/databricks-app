@@ -1,0 +1,40 @@
+name: CI-CD Databricks
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Compile Python notebooks
+        run: python -m compileall -q proceso
+      - name: Validate required folders
+        shell: bash
+        run: |
+          for path in datasets dashboard reversion seguridad PrepAmb proceso certificaciones evidencias README.md; do
+            test -e "$path" || { echo "Missing $path"; exit 1; }
+          done
+
+  deploy:
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    needs: validate
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - uses: actions/checkout@v4
+      - uses: databricks/setup-cli@main
+      - name: Import notebooks
+        env:
+          DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
+          DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
+        run: databricks workspace import-dir . /Shared/databricks-course --overwrite
+
